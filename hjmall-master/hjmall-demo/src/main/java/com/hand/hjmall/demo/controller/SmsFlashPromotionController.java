@@ -13,8 +13,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "SmsFlashPromotionController", description = "秒杀功能接口")
 
+/**
+ * @Description:    秒杀功能相关Controller
+ * @CreateDate:     2019/2/27 22:57
+ * @CreateUser:     吴童
+ * @Version:        1.0
+ */
+//使用 @RestController 注解 声明该接口是一个RestFul接口 返回Json数据，替代了@ResponseBody
+@Api(value = "SmsFlashPromotionController", description = "秒杀功能接口")
 @RestController
 public class SmsFlashPromotionController {
 
