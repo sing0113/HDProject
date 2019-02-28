@@ -24,6 +24,8 @@ public interface SmsFlashPromotionService {
     List<SmsFlashPromotion> lisSmsFlashPromotion(int pageNum, int pageSize);
 
     SmsFlashPromotion getSmsFlashPromotion(Long id);
+    
+    int updateSmsFlashPromotionStatus(Long id, Integer status);
 
 
 }

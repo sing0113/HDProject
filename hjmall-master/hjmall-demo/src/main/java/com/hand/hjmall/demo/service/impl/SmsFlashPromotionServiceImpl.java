@@ -97,4 +97,11 @@ public class SmsFlashPromotionServiceImpl implements SmsFlashPromotionService {
     public SmsFlashPromotion getSmsFlashPromotion(Long id) {
         return smsFlashPromotionMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int updateSmsFlashPromotionStatus(Long id, Integer status) {
+        SmsFlashPromotion smsFlashPromotion = getSmsFlashPromotion(id);
+        smsFlashPromotion.setStatus(status);
+        return smsFlashPromotionMapper.updateByPrimaryKeySelective(smsFlashPromotion);
+    }
 }

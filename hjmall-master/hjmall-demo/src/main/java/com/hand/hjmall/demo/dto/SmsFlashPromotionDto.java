@@ -26,7 +26,7 @@ public class SmsFlashPromotionDto {
     @ApiModelProperty(value = "活动上下线状态",required = true)
     private Integer status;
 
-    @ApiModelProperty(value = "活动秒杀时间段名称",required = true)
+    @ApiModelProperty(value = "活动秒杀时间段名称",required = false)
     private Date createTime;
 
     public String getTitle() {

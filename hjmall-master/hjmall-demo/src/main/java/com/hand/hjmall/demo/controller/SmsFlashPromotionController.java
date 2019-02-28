@@ -13,6 +13,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 
 /**
  * @Description:    秒杀功能相关Controller
@@ -39,11 +41,12 @@ public class SmsFlashPromotionController {
 
 
     @ApiOperation(value = "添加活动")
-    @PostMapping(value = "/flash/create ")
+    @PostMapping(value = "/flash/create")
     public Object createSmsFlashPromotion(@Validated @RequestBody SmsFlashPromotionDto smsFlashPromotionDto, BindingResult result) {
         if (result.hasErrors()) {
             return new CommonResult().validateFailed(result.getFieldError().getDefaultMessage());
         }
+        smsFlashPromotionDto.setCreateTime(new Date());
         CommonResult commonResult;
         int count = smsFlashPromotionService.createSmsFlashPromotion(smsFlashPromotionDto);
         if (count == 1) {
@@ -58,16 +61,11 @@ public class SmsFlashPromotionController {
 
     @ApiOperation(value = "更新活动状态")
     @PostMapping(value = "/flash/update/status/{id}")
-    public Object updateSmsFlashPromotionStatusBtId(@PathVariable("id") Long id ,@RequestParam(value = "活动状态", defaultValue = "1") Integer status ,BindingResult result){
-        if(result.hasErrors()){
-            return new CommonResult().validateFailed(result.getFieldError().getDefaultMessage());
-        }
+    public Object updateSmsFlashPromotionStatusBtId(@PathVariable("id") Long id ,@RequestParam(value = "status", defaultValue = "1") Integer status ){
         CommonResult commonResult;
-        SmsFlashPromotionDto smsFlashPromotionDto = new SmsFlashPromotionDto();
-        smsFlashPromotionDto.setStatus(status);
-        int count = smsFlashPromotionService.updateSmsFlashPromotion(id, smsFlashPromotionDto);
+        int count = smsFlashPromotionService.updateSmsFlashPromotionStatus(id, status);
         if (count == 1) {
-            commonResult = new CommonResult().success(smsFlashPromotionDto);
+            commonResult = new CommonResult().success(null);
             LOGGER.debug("updateSmsFlashPromotionStatus success: id = {} , status = {}", id , status);
         } else {
             commonResult = new CommonResult().failed();
