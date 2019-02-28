@@ -56,6 +56,25 @@ public class SmsFlashPromotionController {
         return commonResult;
     }
 
+    @ApiOperation(value = "更新活动状态")
+    @PostMapping(value = "/flash/update/status/{id}")
+    public Object updateSmsFlashPromotionStatusBtId(@PathVariable("id") Long id ,@RequestParam(value = "活动状态", defaultValue = "1") Integer status ,BindingResult result){
+        if(result.hasErrors()){
+            return new CommonResult().validateFailed(result.getFieldError().getDefaultMessage());
+        }
+        CommonResult commonResult;
+        SmsFlashPromotionDto smsFlashPromotionDto = new SmsFlashPromotionDto();
+        smsFlashPromotionDto.setStatus(status);
+        int count = smsFlashPromotionService.updateSmsFlashPromotion(id, smsFlashPromotionDto);
+        if (count == 1) {
+            commonResult = new CommonResult().success(smsFlashPromotionDto);
+            LOGGER.debug("updateSmsFlashPromotionStatus success: id = {} , status = {}", id , status);
+        } else {
+            commonResult = new CommonResult().failed();
+            LOGGER.debug("updateSmsFlashPromotionStatus failed: id = {} , status = {}", id , status);
+        }
+        return commonResult;
+    }
 
     @ApiOperation(value = "更新活动")
     @PostMapping(value = "/flash/update/{id}")
