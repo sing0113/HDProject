@@ -1,10 +1,17 @@
 package com.hand.hjmall.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.hand.hjmall.dto.UmsAdminParam;
+import com.hand.hjmall.mapper.UmsAdminMapper;
 import com.hand.hjmall.model.UmsAdmin;
+import com.hand.hjmall.model.UmsAdminExample;
 import com.hand.hjmall.model.UmsPermission;
 import com.hand.hjmall.model.UmsRole;
 import com.hand.hjmall.service.UmsAdminService;
+import com.hand.hjmall.utils.EmptyUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +25,20 @@ import java.util.List;
 @Service
 public class UmsAdminServiceImpl implements UmsAdminService {
 
+    // 日志
+    private static final Logger LOGGER = LoggerFactory.getLogger(UmsAdminServiceImpl.class);
+    @Autowired
+    private UmsAdminMapper adminMapper;
+
     @Override
     public UmsAdmin getAdminByUsername(String username) {
+        UmsAdminExample adminExample = new UmsAdminExample();
+        adminExample.createCriteria().andUsernameEqualTo(username);
+        List<UmsAdmin> adminList = adminMapper.selectByExample(adminExample);
+        LOGGER.info("根据用户名获取后台管理员数据为：{}", adminList);
+        if (EmptyUtil.isNotEmpty(adminList)) {
+            return adminList.get(0);
+        }
         return null;
     }
 
@@ -45,7 +64,14 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public List<UmsAdmin> list(String name, Integer pageSize, Integer pageNum) {
-        return null;
+        PageHelper.startPage(pageNum, pageSize);
+        UmsAdminExample example = new UmsAdminExample();
+        UmsAdminExample.Criteria criteria = example.createCriteria();
+        if (EmptyUtil.isNotEmpty(name)) {
+            criteria.andUsernameLike("%" + name + "%");
+            example.or(example.createCriteria().andNickNameLike("%" + name + "%"));
+        }
+        return adminMapper.selectByExample(example);
     }
 
     @Override
@@ -54,8 +80,8 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     }
 
     @Override
-    public int delete(Long id) {
-        return 0;
+    public int deleteUser(Long id) {
+        return adminMapper.deleteByPrimaryKey(id);
     }
 
     @Override
