@@ -57,7 +57,7 @@ public interface UmsAdminService {
     /**
      * 删除指定用户
      */
-    int delete(Long id);
+    int deleteUser(Long id);
 
     /**
      * 修改用户角色关系
