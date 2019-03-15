@@ -20,7 +20,7 @@ export default new Router({
       redirect: '/home',
       children: [{
         path: 'home',
-        name: 'home',
+        name: 'Home',
         component: () => import('../views/home/index'),
         meta: {title: '首页', icon: 'home'}
       }]
@@ -39,11 +39,25 @@ export default new Router({
           meta: {title: '订单列表',icon: 'product-list'}
         },
         {
+          path: 'orderDetail',
+          name: 'OrderDetail',
+          component: () => import('../views/oms/order/orderDetail'),
+          meta: {title: '订单详情'},
+          hidden: true
+        },
+        {
           path: 'orderSetting',
-          name: 'orderSetting',
+          name: 'OrderSetting',
           component: () => import('../views/oms/order/setting'),
           meta: {title: '订单设置', icon: 'order-setting'}
         },
+        {
+          path: 'deliverOrder',
+          name: 'DeliverOrder',
+          component: () => import('../views/oms/order/deliverOrder'),
+          meta: {title: '发货列表'},
+          hidden: true
+        }
       ]
     }
   ]
