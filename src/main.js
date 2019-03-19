@@ -11,7 +11,7 @@ import './icons' //引入svg图片
 import 'normalize.css/normalize.css'  //引入格式化css，需npm安装
 import '@/styles/index.scss' //引入全局样式
 
-// import './permission' //权限验证
+//import './permission' //权限验证
 
 Vue.use(ElementUI);
 

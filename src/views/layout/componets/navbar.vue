@@ -4,7 +4,7 @@
     <breadcrumb></breadcrumb>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
-        <img class="user-avatar" :src="avatar">
+        <img class="user-avatar" :src="user_image">
         <i class="el-icon-caret-bottom"></i>
       </div>
 
@@ -25,6 +25,7 @@
   import {mapGetters} from 'vuex'
   import breadcrumb from '@/components/breadcrumb'
   import hamburger from '@/components/hamburger'
+  import user_image from '@/assets/images/user.jpg'
 
   export default {
     name: 'navbar',
@@ -34,8 +35,7 @@
     },
     computed: {
       ...mapGetters([
-        'sidebar',
-        'avatar'
+        'sidebar'
       ])
     },
     methods: {
@@ -46,6 +46,11 @@
         this.$store.dispatch('Logout').then(() => {
           location.reload(); //重新实例化vue-router对象 避免bug
         })
+      }
+    },
+    data() {
+      return {
+        user_image
       }
     }
   }
